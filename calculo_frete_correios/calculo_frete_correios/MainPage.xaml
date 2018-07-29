@@ -53,9 +53,19 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
       </StackLayout>
-      <Button Text="Go"
+      <Button Text="Calcular Entrega"
            x:Name="button1"
               Clicked="selfDestruct"
+            HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+          <Button Text="buscar cep"
+           x:Name="button2"
+              Clicked="selfDestruct2"
+            HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+          <Button Text="consultar cep"
+           x:Name="button3"
+              Clicked="selfDestruct3"
             HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
     </StackLayout>

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using calculo_frete_correios.Droid.br.com.correios.ws;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace calculo_frete_correios
 {
@@ -14,13 +16,13 @@ namespace calculo_frete_correios
 		{
 			InitializeComponent();
 		}
-        public static Task<string> InputBox(INavigation navigation)
+        public static Task<string> InputBox(INavigation navigation,string title,string message)
         {
             // wait in this proc, until user did his input 
             var tcs = new TaskCompletionSource<string>();
 
-            var lblTitle = new Label { Text = "Title", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
-            var lblMessage = new Label { Text = "Enter new text:" };
+            var lblTitle = new Label { Text = title, HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblMessage = new Label { Text = message };
             var txtInput = new Entry { Text = "" };
 
             var btnOk = new Button
@@ -84,7 +86,42 @@ namespace calculo_frete_correios
             //string myinput = await InputBox(this.Navigation);
             CalcPrecoPrazoWS ws = new CalcPrecoPrazoWS();
             cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", "08563010", cep.Text, pesostr.Text, 1, int.Parse(comp.Text), int.Parse(altura.Text),int.Parse(largura.Text), 0, "N", 18.5m, "S");
-            await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+" prazo:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok"); //"Would you like to play a game", "Yes", "No");
+            await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok"); //"Would you like to play a game", "Yes", "No");
+        }
+        static HttpClient _client = new HttpClient();
+        public async void selfDestruct2(object sender, EventArgs args)
+        {
+
+            string uf = await InputBox(this.Navigation,"uf","Digite a uf:");
+            string cidade = await InputBox(this.Navigation,"cidade","Digite a cidade:");
+            string rua = await InputBox(this.Navigation,"logradouro", "Digite o logradouro(rua, avenida,estrada,etc...):");
+            using (var response = await _client.GetAsync("https://viacep.com.br/ws/"+uf+"/"+cidade+"/"+rua+"/json/"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    // Horray it went well!
+                    var page = await response.Content.ReadAsStringAsync();
+                    cep.Text= JArray.Parse(page)[0]["cep"].ToString();
+                    await DisplayAlert("endereco ","cep: "+JArray.Parse(page)[0]["cep"].ToString(), "ok"); 
+                }
+            }
+            
+        }
+        public async void selfDestruct3(object sender, EventArgs args)
+        {
+
+            string cepin = await InputBox(this.Navigation, "cep", "Digite a cep:");
+            using (var response = await _client.GetAsync("https://viacep.com.br/ws/" + cepin + "/json/"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    // Horray it went well!
+                    var page = await response.Content.ReadAsStringAsync();
+                    cep.Text = JObject.Parse(page)["cep"].ToString();
+                    await DisplayAlert("endereco ", "cep: " + JObject.Parse(page)["cep"].ToString()+ "\nlogradouro: "+ JObject.Parse(page)["logradouro"].ToString() + "\nbairro: " + JObject.Parse(page)["bairro"].ToString() + "\ncidade: " + JObject.Parse(page)["localidade"].ToString() + "\nUF: " + JObject.Parse(page)["uf"].ToString(), "ok");
+                }
+            }
+
         }
     }
 }
