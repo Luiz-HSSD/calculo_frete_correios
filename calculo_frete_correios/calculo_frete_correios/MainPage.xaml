@@ -6,8 +6,57 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
+      <StackLayout Padding="10" Orientation="Horizontal">
+    	<Label Text="cep" 
            HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Entry WidthRequest="150"
+             x:Name="cep"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+      <Label Text="comprimento (cm)" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Entry Text=""
+             WidthRequest="150"
+             x:Name="comp"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+      <Label Text="largura (cm)" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Entry Text=""
+             x:Name="largura"
+             WidthRequest="150"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+      <Label Text="altura (cm)" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Entry WidthRequest="150"
+             x:Name="altura"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+      <Label Text="Peso (Kg)" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Entry x:Name="pesostr"
+             WidthRequest="150"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <Button Text="Go"
+           x:Name="button1"
+              Clicked="selfDestruct"
+            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
     </StackLayout>
 
