@@ -10,7 +10,7 @@
     	<Label Text="cep" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-      <Entry WidthRequest="150"
+      <Entry Keyboard="Numeric" WidthRequest="150"
              x:Name="cep"
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
@@ -19,40 +19,51 @@
       <Label Text="comprimento (cm)" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-      <Entry Text=""
-             WidthRequest="150"
+      <Picker WidthRequest="150"
              x:Name="comp"
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+           VerticalOptions="CenterAndExpand" >
+              <Picker.Items>
+          </Picker.Items>
+    </Picker>
       </StackLayout>
       <StackLayout Padding="10" Orientation="Horizontal">
       <Label Text="largura (cm)" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-      <Entry Text=""
+      <Picker WidthRequest="150"
              x:Name="largura"
-             WidthRequest="150"
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+           VerticalOptions="CenterAndExpand" >
+              <Picker.Items>
+          </Picker.Items>
+    </Picker>
       </StackLayout>
       <StackLayout Padding="10" Orientation="Horizontal">
       <Label Text="altura (cm)" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-      <Entry WidthRequest="150"
+      <Picker WidthRequest="150"
              x:Name="altura"
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+           VerticalOptions="CenterAndExpand" >
+              <Picker.Items>
+          </Picker.Items>
+    </Picker>
       </StackLayout>
       <StackLayout Padding="10" Orientation="Horizontal">
       <Label Text="Peso (Kg)" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-      <Entry x:Name="pesostr"
-             WidthRequest="150"
+      <Picker WidthRequest="150"
+             x:Name="pesostr"
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+           VerticalOptions="CenterAndExpand" >
+              <Picker.Items>
+          </Picker.Items>
+    </Picker>      
       </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
       <Button Text="Calcular Entrega"
            x:Name="button1"
               Clicked="selfDestruct"
@@ -63,11 +74,20 @@
               Clicked="selfDestruct2"
             HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+
+      </StackLayout>
+    <StackLayout Padding="10" Orientation="Horizontal">
           <Button Text="consultar cep"
            x:Name="button3"
               Clicked="selfDestruct3"
             HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+          <Button Text="definir cep origem"
+           x:Name="button4"
+              Clicked="Bora"
+            HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+    </StackLayout>
     </StackLayout>
 
 </ContentPage>

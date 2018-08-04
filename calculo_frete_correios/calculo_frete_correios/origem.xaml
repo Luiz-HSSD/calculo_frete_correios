@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="calculo_frete_correios.origem">
+    <ContentPage.Content>
+      <StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+        <Button Text="cep por localização"
+         x:Name="button5"
+            Clicked="Go"
+          HorizontalOptions="Center"
+         VerticalOptions="CenterAndExpand" />
+        <Button Text="digitar cep origem"
+         x:Name="button6"
+            Clicked="Bora"
+          HorizontalOptions="Center"
+         VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
+      <Button Text="voltar"
+ x:Name="button7"
+    Clicked="back"
+  HorizontalOptions="Center"
+ VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+      </StackLayout>
+        </ContentPage.Content>
+</ContentPage>

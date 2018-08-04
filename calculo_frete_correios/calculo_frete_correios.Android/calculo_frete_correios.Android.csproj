@@ -17,6 +17,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <AndroidErrorOnCustomJavaObject>false</AndroidErrorOnCustomJavaObject>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

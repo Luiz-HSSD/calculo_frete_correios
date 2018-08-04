@@ -10,8 +10,8 @@ namespace calculo_frete_correios
 		public App ()
 		{
 			InitializeComponent();
-
-			MainPage = new MainPage();
+            
+			MainPage = calculo_frete_correios.MainPage.Pag;
 		}
 
 		protected override void OnStart ()

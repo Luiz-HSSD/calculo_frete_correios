@@ -7,15 +7,41 @@ using Xamarin.Forms;
 using calculo_frete_correios.Droid.br.com.correios.ws;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace calculo_frete_correios
 {
 	public partial class MainPage : ContentPage
 	{
-		public MainPage()
+        public static string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cep.txt");
+        public static string cep_origem = "";
+        private static MainPage _pag;
+
+        public static MainPage Pag
+        {
+            get
+            {
+                if (_pag == null)
+                    _pag = new MainPage();
+                return _pag;
+            }
+            set { _pag = value; }
+        }
+        private MainPage()
 		{
 			InitializeComponent();
-		}
+            if (!File.Exists(fileName))
+                File.WriteAllText(fileName, "08561000");
+            cep_origem=File.ReadAllText(fileName);
+            for (int i = 16; i <= 105; i++)
+                comp.Items.Add(i.ToString());
+            for (int i = 11; i <= 105; i++)
+                largura.Items.Add(i.ToString());
+            for (int i = 2; i <= 105; i++)
+                altura.Items.Add(i.ToString());
+            for (int i = 1; i <= 30; i++)
+                pesostr.Items.Add(i.ToString());
+        }
         public static Task<string> InputBox(INavigation navigation,string title,string message)
         {
             // wait in this proc, until user did his input 
@@ -85,10 +111,13 @@ namespace calculo_frete_correios
             
             //string myinput = await InputBox(this.Navigation);
             CalcPrecoPrazoWS ws = new CalcPrecoPrazoWS();
-            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", "08563010", cep.Text, pesostr.Text, 1, int.Parse(comp.Text), int.Parse(altura.Text),int.Parse(largura.Text), 0, "N", 18.5m, "S");
+            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", cep_origem, cep.Text, pesostr.Items.ElementAt(pesostr.SelectedIndex), 1, int.Parse(comp.Items.ElementAt(comp.SelectedIndex)), int.Parse(altura.Items.ElementAt(altura.SelectedIndex)),int.Parse(largura.Items.ElementAt(largura.SelectedIndex)), 0, "N", 18.5m, "S");
+            if(!string.IsNullOrEmpty(c.Servicos.ElementAt(0).MsgErro))
+            await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(0).MsgErro , "ok");
+            else
             await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok"); //"Would you like to play a game", "Yes", "No");
         }
-        static HttpClient _client = new HttpClient();
+        public static HttpClient _client = new HttpClient();
         public async void selfDestruct2(object sender, EventArgs args)
         {
 
@@ -121,6 +150,12 @@ namespace calculo_frete_correios
                     await DisplayAlert("endereco ", "cep: " + JObject.Parse(page)["cep"].ToString()+ "\nlogradouro: "+ JObject.Parse(page)["logradouro"].ToString() + "\nbairro: " + JObject.Parse(page)["bairro"].ToString() + "\ncidade: " + JObject.Parse(page)["localidade"].ToString() + "\nUF: " + JObject.Parse(page)["uf"].ToString(), "ok");
                 }
             }
+
+        }
+        public async void Bora(object sender, EventArgs args)
+        {
+            
+            Application.Current.MainPage = origem.Pag;
 
         }
     }

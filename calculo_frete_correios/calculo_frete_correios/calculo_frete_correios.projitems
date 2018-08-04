@@ -19,5 +19,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)origem.xaml.cs">
+      <DependentUpon>origem.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)origem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
