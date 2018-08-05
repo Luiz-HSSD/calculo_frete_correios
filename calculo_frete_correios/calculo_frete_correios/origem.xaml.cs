@@ -66,10 +66,10 @@ namespace calculo_frete_correios
                                 JObject jResults = JObject.Parse(page);
                                 JArray resultados = (JArray)jResults["results"];
                                 
-                                foreach (JObject bank in resultados)
+                                foreach (JObject endereco in resultados)
                                 {
-                                    JArray jResults_bank_endpoint =(JArray)bank["address_components"];
-                                    foreach (JObject endpoint in jResults_bank_endpoint)
+                                    JArray componetes_endereco =(JArray)endereco["address_components"];
+                                    foreach (JObject endpoint in componetes_endereco)
                                     {
 
                                         JArray types = (JArray)endpoint["types"];
