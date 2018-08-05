@@ -79,6 +79,7 @@ namespace calculo_frete_correios
                                             {
                                                 cep_p = true;
                                                 await DisplayAlert("cordenadas", "cep: " + endpoint["short_name"].ToString(), "ok");
+                                                break;
                                             }
                                         }
                                     }

@@ -108,10 +108,13 @@ namespace calculo_frete_correios
         }
         public async void selfDestruct(object sender, EventArgs args)
         {
-            
+            string yORn;
+            yORn = "N";
+            if (avisoRece.IsToggled)
+                yORn = "S";
             //string myinput = await InputBox(this.Navigation);
             CalcPrecoPrazoWS ws = new CalcPrecoPrazoWS();
-            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", cep_origem, cep.Text, pesostr.Items.ElementAt(pesostr.SelectedIndex), 1, int.Parse(comp.Items.ElementAt(comp.SelectedIndex)), int.Parse(altura.Items.ElementAt(altura.SelectedIndex)),int.Parse(largura.Items.ElementAt(largura.SelectedIndex)), 0, "N", 18.5m, "S");
+            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", cep_origem, cep.Text, pesostr.Items.ElementAt(pesostr.SelectedIndex), 1, int.Parse(comp.Items.ElementAt(comp.SelectedIndex)), int.Parse(altura.Items.ElementAt(altura.SelectedIndex)),int.Parse(largura.Items.ElementAt(largura.SelectedIndex)), 0, "N", 18.5m, yORn);
             if(!string.IsNullOrEmpty(c.Servicos.ElementAt(0).MsgErro))
             await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(0).MsgErro , "ok");
             else

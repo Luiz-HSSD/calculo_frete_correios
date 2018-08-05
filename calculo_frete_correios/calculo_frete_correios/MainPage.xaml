@@ -64,6 +64,14 @@
     </Picker>      
       </StackLayout>
       <StackLayout Padding="10" Orientation="Horizontal">
+      <Label Text="Aviso Recebimento" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+      <Switch   x:Name="avisoRece"
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand"/>
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
       <Button Text="Calcular Entrega"
            x:Name="button1"
               Clicked="selfDestruct"
