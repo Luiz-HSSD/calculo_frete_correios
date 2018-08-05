@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -55,7 +55,41 @@ namespace calculo_frete_correios
                 else
                 {
                     if(calculo_frete_correios.Droid.MainActivity.flg_track)
-                        await DisplayAlert("cordenadas", "lat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
+                    {
+                        bool cep_p = false;
+                        using (var response = await MainPage._client.GetAsync("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ Droid.MainActivity.lat.ToString(CultureInfo.GetCultureInfo("en-US")) + ","+ Droid.MainActivity.lng.ToString(CultureInfo.GetCultureInfo("en-US")) ))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                // Horray it went well!
+                                var page = await response.Content.ReadAsStringAsync();
+                                JObject jResults = JObject.Parse(page);
+                                JArray resultados = (JArray)jResults["results"];
+                                
+                                foreach (JObject bank in resultados)
+                                {
+                                    JArray jResults_bank_endpoint =(JArray)bank["address_components"];
+                                    foreach (JObject endpoint in jResults_bank_endpoint)
+                                    {
+
+                                        JArray types = (JArray)endpoint["types"];
+                                        for(int i=0;i<types.Count;i++)//foreach (JObject ty in types)
+                                        {
+                                            if (types.ElementAt(i).ToString() == "postal_code")
+                                            {
+                                                cep_p = true;
+                                                await DisplayAlert("cordenadas", "cep: " + endpoint["short_name"].ToString(), "ok");
+                                            }
+                                        }
+                                    }
+                                    break;
+                                } 
+                            }
+                        }
+                        if(!cep_p)
+                            await DisplayAlert("cordenadas", "cep indiponível \nlat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
+                        //await DisplayAlert("cordenadas", "lat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
+                    }
                     else
                         await DisplayAlert("cordenadas", "gps ainda não trackeado", "ok");
                 }
