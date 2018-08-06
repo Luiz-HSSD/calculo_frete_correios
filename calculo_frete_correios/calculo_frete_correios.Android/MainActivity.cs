@@ -71,6 +71,8 @@ namespace calculo_frete_correios.Droid
             {
                 ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.AccessFineLocation }, requestCode);
             }
+            locationManager = GetSystemService(LocationService) as LocationManager;
+            locationManager.RequestLocationUpdates(LocationManager.GpsProvider, 0, 0, this);
         }
 
         public void OnLocationChanged(Location location)
