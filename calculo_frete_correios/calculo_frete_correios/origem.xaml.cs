@@ -41,7 +41,8 @@ namespace calculo_frete_correios
         private origem()
 		{
 			InitializeComponent();
-            
+            if (!Droid.MainActivity.flg_loc_init)
+                Droid.MainActivity.loc_init(Droid.MainActivity.main);
             
         }
 
@@ -54,7 +55,7 @@ namespace calculo_frete_correios
                     await DisplayAlert("cordenadas", Droid.MainActivity.ss, "ok");
                 else
                 {
-                    if(calculo_frete_correios.Droid.MainActivity.flg_track)
+                    if(Droid.MainActivity.flg_track)
                     {
                         bool cep_p = false;
                         using (var response = await MainPage._client.GetAsync("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ Droid.MainActivity.lat.ToString(CultureInfo.GetCultureInfo("en-US")) + ","+ Droid.MainActivity.lng.ToString(CultureInfo.GetCultureInfo("en-US")) ))
@@ -78,6 +79,12 @@ namespace calculo_frete_correios
                                             if (types.ElementAt(i).ToString() == "postal_code")
                                             {
                                                 cep_p = true;
+                                                string s= endpoint["short_name"].ToString();
+                                                if (s.Length >= 8)
+                                                {
+                                                    MainPage.cep_origem = s;
+                                                    File.WriteAllText(MainPage.fileName, MainPage.cep_origem);
+                                                }
                                                 await DisplayAlert("cordenadas", "cep: " + endpoint["short_name"].ToString(), "ok");
                                                 break;
                                             }

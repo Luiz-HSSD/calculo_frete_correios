@@ -21,9 +21,9 @@ namespace calculo_frete_correios.Droid
     {
         public static LocationManager locationManager;
         public static Location go;
-
+        public static MainActivity main;
         View rootLayout;
-        public static bool flg_track = false;
+        public static bool flg_track = false,flg_loc_init=false;
         public static double lat = 0, lng = 0;
         static readonly int RC_LAST_LOCATION_PERMISSION_CHECK = 1000;
         public static string ss;
@@ -33,12 +33,13 @@ namespace calculo_frete_correios.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+            main = this;
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) == Permission.Granted)
             {
                 try
                 {
-                    locationManager = GetSystemService(LocationService) as LocationManager;
-                    locationManager.RequestLocationUpdates(LocationManager.GpsProvider, 0, 0, this);
+                    
+                    loc_init(this);
                 }
                 catch(Exception e)
                 {
@@ -54,6 +55,12 @@ namespace calculo_frete_correios.Droid
             }
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+        }
+        public static void loc_init(MainActivity obj)
+        {
+            flg_loc_init = true;
+            locationManager = obj.GetSystemService(LocationService) as LocationManager;
+            locationManager.RequestLocationUpdates(LocationManager.GpsProvider, 0, 0, obj);
         }
         void RequestLocationPermission(int requestCode)
         {

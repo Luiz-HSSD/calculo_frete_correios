@@ -33,6 +33,10 @@ namespace calculo_frete_correios
             if (!File.Exists(fileName))
                 File.WriteAllText(fileName, "08561000");
             cep_origem=File.ReadAllText(fileName);
+            comp.Items.Add("");
+            largura.Items.Add("");
+            altura.Items.Add("");
+            pesostr.Items.Add("");
             for (int i = 16; i <= 105; i++)
                 comp.Items.Add(i.ToString());
             for (int i = 11; i <= 105; i++)
@@ -41,6 +45,12 @@ namespace calculo_frete_correios
                 altura.Items.Add(i.ToString());
             for (int i = 1; i <= 30; i++)
                 pesostr.Items.Add(i.ToString());
+            cep.Text = "";
+            comp.SelectedIndex=0;
+            largura.SelectedIndex = 0;
+            altura.SelectedIndex = 0;
+            pesostr.SelectedIndex = 0;
+            
         }
         public static Task<string> InputBox(INavigation navigation,string title,string message)
         {
@@ -108,6 +118,37 @@ namespace calculo_frete_correios
         }
         public async void selfDestruct(object sender, EventArgs args)
         {
+            if (cep.Text.Contains("-") && cep.Text.Length < 9)
+            {
+                await DisplayAlert("alerta", "preencha  corretamente o cep ", "ok");
+                return;
+            }
+            if (!cep.Text.Contains("-") && cep.Text.Length < 8)
+            {
+                await DisplayAlert("alerta", "preencha corretamente o cep ", "ok");
+                return;
+            }
+            if (comp.SelectedIndex == 0)
+            {
+                await DisplayAlert("alerta", "preencha o comprimento ", "ok");
+                return;
+            }
+            if (largura.SelectedIndex == 0)
+            {
+                await DisplayAlert("alerta", "preencha o largura ", "ok");
+                return;
+            }
+            if (altura.SelectedIndex == 0)
+            {
+                await DisplayAlert("alerta", "preencha o altura ", "ok");
+                return;
+            }
+            if (pesostr.SelectedIndex == 0)
+            {
+                await DisplayAlert("alerta", "preencha o peso ", "ok");
+                return;
+            }
+            
             string yORn;
             yORn = "N";
             if (avisoRece.IsToggled)
@@ -118,7 +159,7 @@ namespace calculo_frete_correios
             if(!string.IsNullOrEmpty(c.Servicos.ElementAt(0).MsgErro))
             await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(0).MsgErro , "ok");
             else
-            await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok"); //"Would you like to play a game", "Yes", "No");
+            await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok");
         }
         public static HttpClient _client = new HttpClient();
         public async void selfDestruct2(object sender, EventArgs args)
