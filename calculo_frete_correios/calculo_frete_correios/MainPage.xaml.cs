@@ -51,10 +51,7 @@ namespace calculo_frete_correios
             largura.SelectedIndex = 0;
             altura.SelectedIndex = 0;
             pesostr.SelectedIndex = 0;
-            while (!CrossConnectivity.Current.IsConnected)
-            {
-                 DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
-            }
+            
         }
         public static Task<string> InputBox(INavigation navigation,string title,string message)
         {
@@ -122,6 +119,11 @@ namespace calculo_frete_correios
         }
         public async void selfDestruct(object sender, EventArgs args)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+               await DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+                return;
+            }
             if (cep.Text.Contains("-") && cep.Text.Length < 9)
             {
                 await DisplayAlert("alerta", "preencha  corretamente o cep ", "ok");
@@ -159,15 +161,24 @@ namespace calculo_frete_correios
                 yORn = "S";
             //string myinput = await InputBox(this.Navigation);
             CalcPrecoPrazoWS ws = new CalcPrecoPrazoWS();
-            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 40045 , 40215 , 40290 , 41106", cep_origem, cep.Text, pesostr.Items.ElementAt(pesostr.SelectedIndex), 1, int.Parse(comp.Items.ElementAt(comp.SelectedIndex)), int.Parse(altura.Items.ElementAt(altura.SelectedIndex)),int.Parse(largura.Items.ElementAt(largura.SelectedIndex)), 0, "N", 18.5m, yORn);
+            cResultado c=  ws.CalcPrecoPrazo("", "", "40010 , 41106", cep_origem, cep.Text, pesostr.Items.ElementAt(pesostr.SelectedIndex), 1, int.Parse(comp.Items.ElementAt(comp.SelectedIndex)), int.Parse(altura.Items.ElementAt(altura.SelectedIndex)),int.Parse(largura.Items.ElementAt(largura.SelectedIndex)), 0, "N", 18.5m, yORn);
             if(!string.IsNullOrEmpty(c.Servicos.ElementAt(0).MsgErro))
-            await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(0).MsgErro , "ok");
+                await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(0).MsgErro , "ok");
             else
-            await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok");
+                await  DisplayAlert("Sedex varejo","preço: "+ c.Servicos.ElementAt(0).Valor+"\nprazo em dias:" + c.Servicos.ElementAt(0).PrazoEntrega, "ok");
+            if (!string.IsNullOrEmpty(c.Servicos.ElementAt(1).MsgErro))
+                await DisplayAlert("Sedex varejo", "Erro: " + c.Servicos.ElementAt(1).MsgErro, "ok");
+            else
+                await DisplayAlert("PAC varejo", "preço: " + c.Servicos.ElementAt(1).Valor + "\nprazo em dias:" + c.Servicos.ElementAt(1).PrazoEntrega, "ok");
         }
         public static HttpClient _client = new HttpClient();
         public async void selfDestruct2(object sender, EventArgs args)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+                return;
+            }
 
             string uf = await InputBox(this.Navigation,"uf","Digite a uf:");
             string cidade = await InputBox(this.Navigation,"cidade","Digite a cidade:");
@@ -186,7 +197,11 @@ namespace calculo_frete_correios
         }
         public async void selfDestruct3(object sender, EventArgs args)
         {
-
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+                return;
+            }
             string cepin = await InputBox(this.Navigation, "cep", "Digite a cep:");
             using (var response = await _client.GetAsync("https://viacep.com.br/ws/" + cepin + "/json/"))
             {

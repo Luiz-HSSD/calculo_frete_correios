@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Connectivity;
 
 namespace calculo_frete_correios
 {
@@ -51,6 +52,11 @@ namespace calculo_frete_correios
         {
             try
             {
+                if (!CrossConnectivity.Current.IsConnected)
+                {
+                    await DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+                    return;
+                }
                 if (!string.IsNullOrEmpty(Droid.MainActivity.ss))
                     await DisplayAlert("cordenadas", Droid.MainActivity.ss, "ok");
                 else
@@ -155,7 +161,11 @@ namespace calculo_frete_correios
         }
         public async void Bora(object sender, EventArgs args)
         {
-
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+                return;
+            }
             string cepin = await MainPage.InputBox(this.Navigation, "cep", "Digite a cep:");
             using (var response = await MainPage._client.GetAsync("https://viacep.com.br/ws/" + cepin + "/json/"))
             {
