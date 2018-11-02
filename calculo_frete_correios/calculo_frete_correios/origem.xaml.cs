@@ -94,8 +94,51 @@ namespace calculo_frete_correios
                                 } 
                             }
                         }
-                        if(!cep_p)
-                            await DisplayAlert("cordenadas", "cep indiponível \nlat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
+                        if (!cep_p)
+                        {
+                            string ss= "https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?app_id=IayXi8zl6hLwYJMiPe8I&app_code=X96zYiQMXAHyhhIv34ZuuA&mode=retrieveAddresses&prox=" + Droid.MainActivity.lat.ToString(CultureInfo.GetCultureInfo("en-US")) + "," + Droid.MainActivity.lng.ToString(CultureInfo.GetCultureInfo("en-US")) + ",200";
+                            using (var response = await MainPage._client.GetAsync(ss))
+                            {
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    // Horray it went well!
+                                    var page = await response.Content.ReadAsStringAsync();
+                                    
+                                    JObject jResults = JObject.Parse(page);
+                                    JArray resultados = (JArray)jResults["Response"]["View"].ElementAt(0)["Result"];
+
+                                    foreach (JObject endereco in resultados)
+                                    {
+                                        JObject componetes_endereco = (JObject)endereco["Location"]["Address"];
+
+
+                                        if (componetes_endereco["PostalCode"] != null)
+                                        {
+
+                                            string s = componetes_endereco["PostalCode"].ToString();
+                                            if (s.Length >= 8)
+                                            {
+                                                cep_p = true;
+                                                MainPage.cep_origem = s; MainPage.cep_origem = s;
+                                                File.WriteAllText(MainPage.fileName, MainPage.cep_origem);
+                                                
+                                            }
+                                            await DisplayAlert("cordenadas", "rua: " + componetes_endereco["Street"].ToString() + "\ncidade: " + componetes_endereco["City"].ToString() + "\ncep: " + componetes_endereco["PostalCode"].ToString(), "ok");
+
+                                            break;
+                                        }
+                                        else
+                                            await DisplayAlert("cordenadas", "cep: ", "ok");                                        
+                                    }
+                                }
+                                else
+                                {
+                                    await DisplayAlert("cordenadas", "problema na requisição", "ok");
+                                }
+                            }
+                            if (!cep_p)
+                                await DisplayAlert("cordenadas", "cep indiponível \nlat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
+                        }
                         //await DisplayAlert("cordenadas", "lat: " + Droid.MainActivity.lat + "\nlng: " + Droid.MainActivity.lng, "ok");
                     }
                     else
@@ -105,7 +148,8 @@ namespace calculo_frete_correios
             }
             catch(Exception e)
             {
-                await DisplayAlert("cordenadas", e.ToString(), "ok");
+                await DisplayAlert("cordenadas", e.Message.ToString(), "ok");
+
             }
             //await DisplayAlert("novo endereço escrito", "lat: "+ location.Latitude + "\nEscrito com sucesso", "ok");
         }

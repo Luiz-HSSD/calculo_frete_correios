@@ -8,6 +8,7 @@ using calculo_frete_correios.Droid.br.com.correios.ws;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using Plugin.Connectivity;
 
 namespace calculo_frete_correios
 {
@@ -50,7 +51,10 @@ namespace calculo_frete_correios
             largura.SelectedIndex = 0;
             altura.SelectedIndex = 0;
             pesostr.SelectedIndex = 0;
-            
+            while (!CrossConnectivity.Current.IsConnected)
+            {
+                 DisplayAlert("alerta", "por favor conecte-se na internet ", "ok");
+            }
         }
         public static Task<string> InputBox(INavigation navigation,string title,string message)
         {
