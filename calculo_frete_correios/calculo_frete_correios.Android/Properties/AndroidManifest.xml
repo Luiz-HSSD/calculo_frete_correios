@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.2" package="calculo_entrega_open_src.calculo_entrega_open_src" android:installLocation="auto" android:versionCode="5">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.5" package="com.companyname.calculo_frete_correios.Android" android:installLocation="auto" android:versionCode="6">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<application android:label="Calculo Entrega" android:icon="@mipmap/launcher_foreground"></application>
 </manifest>
