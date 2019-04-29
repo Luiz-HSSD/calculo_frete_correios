@@ -22,7 +22,9 @@ namespace calculo_frete_correios.Droid
         public static LocationManager locationManager;
         public static Location go;
         public static MainActivity main;
+#pragma warning disable CS0649 // Campo "MainActivity.rootLayout" nunca é atribuído e sempre terá seu valor padrão null
         View rootLayout;
+#pragma warning restore CS0649 // Campo "MainActivity.rootLayout" nunca é atribuído e sempre terá seu valor padrão null
         public static bool flg_track = false,flg_loc_init=false;
         public static double lat = 0, lng = 0;
         static readonly int RC_LAST_LOCATION_PERMISSION_CHECK = 1000;

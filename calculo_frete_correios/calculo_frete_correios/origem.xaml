@@ -17,6 +17,13 @@
          VerticalOptions="CenterAndExpand" />
       </StackLayout>
       <StackLayout Padding="10" Orientation="Horizontal">
+          <Button Text="Rastreio Entrega"
+     x:Name="button8"
+        Clicked="ras_en"
+      HorizontalOptions="Center"
+     VerticalOptions="CenterAndExpand" />
+      </StackLayout>
+      <StackLayout Padding="10" Orientation="Horizontal">
       <Button Text="voltar"
  x:Name="button7"
     Clicked="back"

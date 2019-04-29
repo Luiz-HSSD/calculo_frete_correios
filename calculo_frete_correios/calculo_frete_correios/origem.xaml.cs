@@ -15,6 +15,9 @@ using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
+using calculo_frete_correios.Droid.CorreiosWS;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace calculo_frete_correios
 {
@@ -179,10 +182,56 @@ namespace calculo_frete_correios
                 }
             }
         }
+
+        XmlSerializer sr = new XmlSerializer(typeof(rastro));
+        XmlSerializer srr = new XmlSerializer(typeof(rastroo));
+
+        public async void ras_en(object sender, EventArgs args)
+        {
+            try 
+            { 
+                string rasin = await MainPage.InputBox(this.Navigation, "ratreio", "Digite o código de rastreio:");
+                if (string.IsNullOrEmpty(rasin))
+                {
+                    await DisplayAlert("ratreio", "por favor digite o código.","ok");
+                    return;
+                }
+                AtendeClienteService ss = new AtendeClienteService();
+                rasin=ss.consultaSRO(new string[] { rasin }, "L", "T", "ECT", "SRO");
+                var xr=  XmlReader.Create(new StringReader(rasin));
+                rastro ras = (rastro)sr.Deserialize(xr);
+            
+                xr = XmlReader.Create(new StringReader(rasin));
+                rastroo rass = (rastroo)srr.Deserialize(xr);
+                ras.objeto.categoria = rass.objeto.categoria;
+                ras.objeto.nome = rass.objeto.nome;
+                ras.objeto.numero = rass.objeto.numero;
+                ras.objeto.sigla = rass.objeto.sigla;
+            
+                StringBuilder sb = new StringBuilder();
+                //sb.Append(ras.objeto.categoria + "      " + rass.objeto.nome + "    " + ras.objeto.numero + "   " + ras.objeto.sigla + "\n\n");
+                for (int i=0;i< ras.objeto.Count;i++)
+                {
+                    sb.Append(ras.objeto.ElementAt(i).local + " " + ras.objeto.ElementAt(i).uf + " "+ ras.objeto.ElementAt(i).cidade + "\t" + ras.objeto.ElementAt(i).codigo+ " " + ras.objeto.ElementAt(i).descricao+"\n");
+                    //+ e.data + "   " + e.hora + "   " + e.descricao + "   " + e.status + "\n");
+                }
+            
+                string s = (sb.Length > 0) ? sb.ToString() : "vazio";
+                await DisplayAlert(ras.objeto.categoria + "      " + rass.objeto.nome + "    " + ras.objeto.numero, sb.ToString(), "ok");
+            }
+            catch(Exception e)
+            {
+                await DisplayAlert("rastreio", e.Message.ToString(), "ok");
+            }
+
+        }
+
+#pragma warning disable CS1998 // Este método assíncrono não possui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'await Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano.
         public async void back(object sender, EventArgs args)
+#pragma warning restore CS1998 // Este método assíncrono não possui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'await Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano.
         {
 
-            Application.Current.MainPage = MainPage.Pag;
+            Application.Current.MainPage =  MainPage.Pag;
 
         }
 

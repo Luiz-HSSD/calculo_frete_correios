@@ -16,13 +16,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)evento.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)objeto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)objetoo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)origem.xaml.cs">
       <DependentUpon>origem.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)rastro.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)rastroo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)origem.xaml">
