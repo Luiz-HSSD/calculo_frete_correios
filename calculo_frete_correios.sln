@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calculo_frete_correios.Android", "calculo_frete_correios\calculo_frete_correios.Android\calculo_frete_correios.Android.csproj", "{B92B8C5A-DEE5-4172-89AE-321F74D8C1D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calculo_frete_correios.Android", "cfc\calculo_frete_correios.Android\calculo_frete_correios.Android.csproj", "{B92B8C5A-DEE5-4172-89AE-321F74D8C1D1}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "calculo_frete_correios", "calculo_frete_correios\calculo_frete_correios\calculo_frete_correios.shproj", "{B6AA46CA-1FEC-4431-82AE-EC9161D75173}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "calculo_frete_correios", "cfc\calculo_frete_correios\calculo_frete_correios.shproj", "{B6AA46CA-1FEC-4431-82AE-EC9161D75173}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		calculo_frete_correios\calculo_frete_correios\calculo_frete_correios.projitems*{b6aa46ca-1fec-4431-82ae-ec9161d75173}*SharedItemsImports = 13
-		calculo_frete_correios\calculo_frete_correios\calculo_frete_correios.projitems*{b92b8c5a-dee5-4172-89ae-321f74d8c1d1}*SharedItemsImports = 4
+		cfc\calculo_frete_correios\calculo_frete_correios.projitems*{b6aa46ca-1fec-4431-82ae-ec9161d75173}*SharedItemsImports = 13
+		cfc\calculo_frete_correios\calculo_frete_correios.projitems*{b92b8c5a-dee5-4172-89ae-321f74d8c1d1}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
